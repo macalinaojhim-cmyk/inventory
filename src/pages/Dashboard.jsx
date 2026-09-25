@@ -4,6 +4,7 @@ import 'ldrs/react/Bouncy.css'
 import { ProductContext } from "../context/ProductContext";
 import { useContext, useState } from "react";
 import ProductTable from '../components/ProductTable';
+import Card from '../components/Card';
 
 export default function Dashbord() {
     const { productList, rop, status, loading, totalStock, availabilityStatus } = useContext(ProductContext);
@@ -12,14 +13,8 @@ export default function Dashbord() {
         <div>
             <h1 className="dashboard heading">Dashboard</h1>
             <div className="card-container">
-                <div className="card total-product">
-                    <h2>Total Products</h2>
-                    <p className='num' >{productList.length}</p>
-                </div>
-                <div className="card total-stock">
-                    <h2>Total Stock</h2>
-                    <p className='num'>{productList.reduce((sum, product) => sum + product.stock, 0)}</p>
-                </div>
+                <Card title={"Total Products"} content={productList.length}/>
+                <Card title={"Total Stock"} content={productList.reduce((sum, product) => sum + product.stock, 0)} />
                 <div className="card stock-status">
                     <h2>Low Stock</h2>
                     <div>
