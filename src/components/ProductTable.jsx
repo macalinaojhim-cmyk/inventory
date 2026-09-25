@@ -40,7 +40,7 @@ export default function ProductTable() {
                                 <td>{product.id}</td>
                                 <td>{product.title}</td>
                                 <td>{product.category}</td>
-                                <td>₱{product.price}</td>
+                                <td>₱{(product.price * 60).toFixed(2)}</td>
                                 <td>{product.stock}</td>
                                 <td>
                                     <span className={

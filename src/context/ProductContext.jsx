@@ -9,6 +9,7 @@ export function ProductProvider({ children }) {
   const [category, setCategory] = useState("Others");
   const [categories, setCategories] = useState([]);
   const [availabilityStatus, setAvailabilityStatus] = useState("In Stock");
+  const [totalStock, setTotalStock] = useState();
 
   useEffect(() => {
     async function getItems() {
@@ -36,7 +37,12 @@ export function ProductProvider({ children }) {
       ...currentProducts,
       newProduct,
     ]);
-    
+
+  }
+
+  function toggleStock(){
+    const total = productList.reduce((sum, product) => sum + product.stock, 0);
+    setTotalStock(total)
   }
 
   function rop(product) {
@@ -62,7 +68,9 @@ export function ProductProvider({ children }) {
       loading,
       category, setCategory,
       categories,
-      availabilityStatus, setAvailabilityStatus
+      availabilityStatus, setAvailabilityStatus,
+
+      totalStock
     }}>
       {children}
     </ProductContext.Provider>

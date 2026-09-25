@@ -6,10 +6,7 @@ import { useContext, useState } from "react";
 import ProductTable from '../components/ProductTable';
 
 export default function Dashbord() {
-
-    const { productList, rop, status, loading } = useContext(ProductContext);
-
-   
+    const { productList, rop, status, loading, totalStock, availabilityStatus } = useContext(ProductContext);
 
     return (
         <div>
@@ -17,15 +14,21 @@ export default function Dashbord() {
             <div className="card-container">
                 <div className="card total-product">
                     <h2>Total Products</h2>
-                    <p>{productList.length}</p>
+                    <p className='num' >{productList.length}</p>
                 </div>
                 <div className="card total-stock">
                     <h2>Total Stock</h2>
-                    <p>123</p>
+                    <p className='num'>{productList.reduce((sum, product) => sum + product.stock, 0)}</p>
                 </div>
                 <div className="card stock-status">
                     <h2>Low Stock</h2>
-                    <p>0</p>
+                    <div>
+                       {productList.filter((product) => product.availabilityStatus.toLowerCase() === "low stock").map((product) => (
+                                    <div className='stock-list' key={product.id}>
+                                        <p>* {product.title}</p>
+                                </div>
+                                ))} 
+                    </div>
                 </div>
             </div>
             <div className="products-table">

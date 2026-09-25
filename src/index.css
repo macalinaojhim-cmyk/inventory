@@ -67,6 +67,16 @@ main {
   gap: 20px;
 }
 
+.stock-list {
+  display: flex;
+  justify-content: space-between;
+}
+
+.stock-table td {
+  border: 1px solid black;
+  padding: 1px;
+
+}
 
 .card {
   background: #ffffff;
@@ -74,6 +84,8 @@ main {
   border-radius: 12px;
   border: 1px solid #e2e8f0;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  max-height: 120px;
+  overflow-y: auto;
 }
 
 .card h2 {
@@ -84,9 +96,14 @@ main {
 }
 
 .card p {
+  color: #0f172a;
+  display: flex;
+  flex-direction: column;
+}
+
+.card .num {
   font-size: 30px;
   font-weight: bold;
-  color: #0f172a;
 }
 
 table {
@@ -97,6 +114,7 @@ table {
 }
 
 .table-container{
+  width: 100%;
   max-height: 570px;
   overflow-y: auto;
   margin-top: 10px;
@@ -105,8 +123,10 @@ table {
 
 th,
 td {
-  padding: 14px;
- 
+  padding: 2px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  padding-right: 5px;
   border-bottom: 1px solid #ddd;
   background: #ffffff;
 }
@@ -125,7 +145,7 @@ th {
     color: #dc2626;
     padding: 5px 10px;
     border-radius: 20px;
-    font-weight: 600;
+    font-weight: 100;
 }
 
 .low-stock {
@@ -133,7 +153,7 @@ th {
     color: #d97706;
     padding: 5px 10px;
     border-radius: 20px;
-    font-weight: 600;
+    font-weight: 100;
 }
 
 .in-stock {
@@ -141,7 +161,7 @@ th {
     color: #16a34a;
     padding: 5px 10px;
     border-radius: 20px;
-    font-weight: 600;
+    font-weight: 100;
 }
 
 button {
