@@ -1,11 +1,33 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import products from "../data/products";
 
 export const ProductContext = createContext();
 
 export function ProductProvider({ children }) {
-  const [productList, setProductList] = useState(products);
-  const [productStatus, setProductStatus] = useState("");
+  const [productList, setProductList] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [categories, setCategories] = useState([]);
+
+  useEffect(() => {
+    async function getItems() {
+      try {
+
+        const response = await fetch("https://dummyjson.com/products?limit=190");
+
+        const data = await response.json();
+        setProductList(data.products);
+
+        const uniqueCategories = [...new Set(data.products.map((p) => p.category))];
+        setCategories(uniqueCategories);
+      }
+      catch (error) {
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
+    }
+    getItems();
+  }, []);
 
   function addProduct(newProduct) {
     setProductList((currentProducts) => [
@@ -14,26 +36,29 @@ export function ProductProvider({ children }) {
     ]);
   }
 
-  function rop(product){
+  function rop(product) {
     return product.dailyDemand * product.leadTime;
   }
 
-  function eoq(product){
+  function eoq(product) {
     return Math.sqrt((2 * product.demand * product.orderingCost) / product.holdingCost);
   }
 
-  function status(product){
-    if (product.stock < rop(product)){
-      return ("Reorder Required");
-    } else if ((product.stock / rop(product) * 100) < 140){
-      return ("Low Stock");
-    } else {
-      return ("In Stock");
-    }
+  
+
+  if (loading) {
+
   }
 
   return (
-    <ProductContext.Provider value={{ productList, addProduct, rop, eoq, status }}>
+    <ProductContext.Provider value={{
+      productList,
+      addProduct,
+      rop,
+      eoq,
+      loading,
+      categories
+    }}>
       {children}
     </ProductContext.Provider>
   );

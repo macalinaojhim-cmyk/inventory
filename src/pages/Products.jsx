@@ -3,22 +3,30 @@ import { ProductContext } from "../context/ProductContext";
 
 function Products() {
   const [showModal, setShowModal] = useState(false);
-  const { productList, addProduct } = useContext(ProductContext);
+  const { productList, addProduct, items, loading, categories } = useContext(ProductContext);
 
   const [name, setName] = useState("");
   const [category, setCategory] = useState("");
   const [price, setPrice] = useState("");
   const [stock, setStock] = useState("");
+  const [availabilityStatus, setAvailabilityStatus] = useState("");
+
+  const [selected, setSelected] = useState("");
+
+  function handleSelect(e){
+    setSelected(e.target.value)
+  }
 
   function handleSubmit(e) {
     e.preventDefault();
 
     const newProduct = {
       id: productList.length + 1,
-      name: name,
+      title: name,
       category: category,
       price: Number(price),
       stock: Number(stock),
+      availabilityStatus: availabilityStatus
     };
 
     addProduct(newProduct);
@@ -29,6 +37,10 @@ function Products() {
     setStock("");
 
     setShowModal(false);
+  }
+
+  if (loading) {
+
   }
 
   return (
@@ -43,7 +55,15 @@ function Products() {
           <tr>
             <th>ID</th>
             <th>Products</th>
-            <th>Category</th>
+            <th>
+              Category
+              <select name="category" id="category" value={selected} onChange={handleSelect}>
+                <option value="all">All</option>
+                {categories.map((categ) => (
+                  <option key={categ} value={categ}>{categ}</option>
+                ))}
+              </select>
+            </th>
             <th>Price</th>
             <th>Stock</th>
             <th>Status</th>
@@ -52,14 +72,24 @@ function Products() {
         </thead>
 
         <tbody>
-          {productList.map((product) => (
+          {productList.filter((product) => selected === "all" || product.category === selected).map((product) => (
             <tr key={product.id}>
               <td>{product.id}</td>
-              <td>{product.name}</td>
+              <td>{product.title}</td>
               <td>{product.category}</td>
               <td>₱{product.price}</td>
               <td>{product.stock}</td>
-              <td></td>
+              <td>
+                <span className={
+                  product.availabilityStatus === "Out of Stock"
+                    ? "reorder-required"
+                    : product.availabilityStatus === "Low Stock"
+                      ? "low-stock"
+                      : "in-stock"
+                }>
+                  {product.availabilityStatus}
+                </span>
+              </td>
               <td></td>
             </tr>
           ))}
@@ -141,6 +171,14 @@ function Products() {
                     min="0"
                     required
                   />
+                </div>
+
+                <div>
+                  <select onChange={(e) => setAvailabilityStatus(e.target.value)} name="availabilityStatus" id="availabilityStatus">
+                    <option value="In Stock">In Stock</option>
+                    <option value="Low Stock">Low Stock</option>
+                    <option value="Out of Stock">Out of Stock</option>
+                  </select>
                 </div>
               </div>
 

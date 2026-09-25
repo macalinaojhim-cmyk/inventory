@@ -1,9 +1,14 @@
+import { Bouncy } from 'ldrs/react'
+import 'ldrs/react/Bouncy.css'
+
 import { ProductContext } from "../context/ProductContext";
 import { useContext, useState } from "react";
 
 export default function Dashbord() {
 
-    const { productList, rop, status } = useContext(ProductContext);
+    const { productList, rop, status, loading } = useContext(ProductContext);
+
+   
 
     return (
         <div>
@@ -23,14 +28,14 @@ export default function Dashbord() {
                 </div>
             </div>
             <div className="products-table">
-                <table>
+                {!loading ? (<table>
                     <thead>
                         <tr>
                             <th>Product</th>
                             <th>Category</th>
                             <th>Price</th>
                             <th>Stock</th>
-                            <th>Reorder Point</th>
+
                             <th>Status</th>
                         </tr>
                     </thead>
@@ -38,26 +43,34 @@ export default function Dashbord() {
                     <tbody>
                         {productList.map((product) => (
                             <tr key={product.id}>
-                                <td>{product.name}</td>
+                                <td>{product.title}</td>
                                 <td>{product.category}</td>
                                 <td>₱{product.price}</td>
                                 <td>{product.stock}</td>
-                                <td>{rop(product)}</td>
+
                                 <td>
                                     <span className={
-                                        status(product) === "Reorder Required"
+                                        product.availabilityStatus === "Out of Stock"
                                             ? "reorder-required"
-                                            : status(product) === "Low Stock"
+                                            : product.availabilityStatus === "Low Stock"
                                                 ? "low-stock"
                                                 : "in-stock"
                                     }>
-                                        {status(product)}
+                                        {product.availabilityStatus}
                                     </span>
                                 </td>
                             </tr>
                         ))}
                     </tbody>
-                </table>
+                </table>) : 
+                <div className="loading">
+                    <Bouncy 
+                size="45"
+                speed="1.75"
+                color="black"
+            />
+                </div>
+                }
             </div>
         </div>
     )

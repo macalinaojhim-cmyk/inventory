@@ -24,6 +24,7 @@ body {
   background: #ffffff;
   border-right: 1px solid #e2e8f0;
   flex-shrink: 0;
+  position: fixed;
 }
 
 .sidebar h1 {
@@ -56,6 +57,7 @@ main {
   min-height: 100vh;
   padding: 30px;
   background: #f8fafc;
+  margin-left: 250px;
 }
 
 
@@ -97,7 +99,7 @@ table {
 th,
 td {
   padding: 14px;
-  text-align: center;
+ 
   border-bottom: 1px solid #ddd;
   background: #ffffff;
 }
@@ -317,3 +319,19 @@ button:hover .arrow {
   background: var(--secondary-color);
 }
  
+.loading {
+  margin-top: 10%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+select {
+  border: none;
+  border-radius: 10px;
+  margin-left: 10px;
+}
+
+option{
+ font-family: sans-serif;
+}

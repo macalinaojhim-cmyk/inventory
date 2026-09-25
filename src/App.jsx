@@ -18,7 +18,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Dashboard />} />
             <Route path="/products" element={<Products />} />
-            <Route path="/eoq" element={<EOQ />} />
+            
           </Routes>
         </main>
       </div>
