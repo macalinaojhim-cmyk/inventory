@@ -10,6 +10,7 @@ export function ProductProvider({ children }) {
   const [categories, setCategories] = useState([]);
   const [availabilityStatus, setAvailabilityStatus] = useState("In Stock");
   const [totalStock, setTotalStock] = useState();
+  const [askModal, setAskModal] = useState(false);
 
   useEffect(() => {
     async function getItems() {
@@ -38,6 +39,10 @@ export function ProductProvider({ children }) {
       newProduct,
     ]);
 
+  }
+
+  function deleteProduct(productId){
+    setProductList(productList.filter((product) => product.id !== productId));
   }
 
   function toggleStock(){
@@ -70,7 +75,8 @@ export function ProductProvider({ children }) {
       categories,
       availabilityStatus, setAvailabilityStatus,
 
-      totalStock
+      totalStock,
+      deleteProduct
     }}>
       {children}
     </ProductContext.Provider>

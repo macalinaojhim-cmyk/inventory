@@ -1,13 +1,19 @@
 import { useContext, useState } from "react";
 import { ProductContext } from "../context/ProductContext";
 import { Bouncy } from 'ldrs/react'
+import { Trash } from "lucide-react";
+
 
 export default function ProductTable() {
-    const { productList, addProduct, items, loading, categories, availabilityStatus, setAvailabilityStatus } = useContext(ProductContext);
+    const { productList, addProduct, deleteProduct, items, loading, categories, availabilityStatus, setAvailabilityStatus, askModal, setAskModal } = useContext(ProductContext);
     const [selected, setSelected] = useState("");
 
     function handleSelect(e) {
         setSelected(e.target.value)
+    }
+
+    function handleClick(id) {
+        deleteProduct(id)
     }
 
     return (
@@ -53,7 +59,11 @@ export default function ProductTable() {
                                         {product.availabilityStatus}
                                     </span>
                                 </td>
-                                <td></td>
+                                <td>
+                                    <button onClick={() => handleClick(product.id)}>
+                                        <Trash size={15} />
+                                    </button>
+                                </td>
                             </tr>
                         ))}
                     </tbody>
@@ -63,7 +73,11 @@ export default function ProductTable() {
                         speed="1.75"
                         color="black"
                     />
+                    {askModal && (
+                        <AskModal />
+                    )}
                 </div>
+
             }
         </div>
     )

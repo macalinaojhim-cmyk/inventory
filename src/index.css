@@ -168,6 +168,7 @@ button {
   margin-top: 20px;
 }
 
+
 .heading {
   background: #ffffff;
   margin-bottom: 15px;
@@ -366,4 +367,24 @@ select {
 
 option{
  font-family: sans-serif;
+}
+
+.ask-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.ask-modal {
+  background: #ffffff;
+  width: 500px;
+  max-width: 100%;
+  padding: 28px;
+  border-radius: 14px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 20px 50px rgba(15, 23, 42, 0.15);
 }
