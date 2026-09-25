@@ -1,22 +1,17 @@
 import { useContext, useState } from "react";
 import { ProductContext } from "../context/ProductContext";
+import { Bouncy } from 'ldrs/react'
+import 'ldrs/react/Bouncy.css'
+import ProductTable from "../components/ProductTable";
 
 function Products() {
   const [showModal, setShowModal] = useState(false);
-  const { productList, addProduct, items, loading, categories } = useContext(ProductContext);
+  const { productList, addProduct, loading, category, setCategory, categories, availabilityStatus, setAvailabilityStatus } = useContext(ProductContext);
 
   const [name, setName] = useState("");
-  const [category, setCategory] = useState("");
   const [price, setPrice] = useState("");
   const [stock, setStock] = useState("");
-  const [availabilityStatus, setAvailabilityStatus] = useState("");
-
-  const [selected, setSelected] = useState("");
-
-  function handleSelect(e){
-    setSelected(e.target.value)
-  }
-
+  
   function handleSubmit(e) {
     e.preventDefault();
 
@@ -50,51 +45,7 @@ function Products() {
         <button onClick={() => setShowModal(true)}>Add Product</button>
       </div>
 
-      <table>
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Products</th>
-            <th>
-              Category
-              <select name="category" id="category" value={selected} onChange={handleSelect}>
-                <option value="all">All</option>
-                {categories.map((categ) => (
-                  <option key={categ} value={categ}>{categ}</option>
-                ))}
-              </select>
-            </th>
-            <th>Price</th>
-            <th>Stock</th>
-            <th>Status</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-
-        <tbody>
-          {productList.filter((product) => selected === "all" || product.category === selected).map((product) => (
-            <tr key={product.id}>
-              <td>{product.id}</td>
-              <td>{product.title}</td>
-              <td>{product.category}</td>
-              <td>₱{product.price}</td>
-              <td>{product.stock}</td>
-              <td>
-                <span className={
-                  product.availabilityStatus === "Out of Stock"
-                    ? "reorder-required"
-                    : product.availabilityStatus === "Low Stock"
-                      ? "low-stock"
-                      : "in-stock"
-                }>
-                  {product.availabilityStatus}
-                </span>
-              </td>
-              <td></td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <ProductTable />
 
       {showModal && (
         <div className="add-product-modal">
@@ -137,11 +88,10 @@ function Products() {
                       onChange={(e) => setCategory(e.target.value)}
                       required
                     >
-                      <option value="">Select category</option>
-                      <option value="Electronics">Electronics</option>
-                      <option value="Food">Food</option>
-                      <option value="Clothing">Clothing</option>
-                      <option value="Others">Others</option>
+                      <option value="others">Others</option>
+                      {categories.map((categ) => (
+                        <option key={categ} value={categ}>{categ}</option>
+                      ))}
                     </select>
                   </div>
 
@@ -174,7 +124,7 @@ function Products() {
                 </div>
 
                 <div>
-                  <select onChange={(e) => setAvailabilityStatus(e.target.value)} name="availabilityStatus" id="availabilityStatus">
+                  <select value={availabilityStatus} onChange={(e) => setAvailabilityStatus(e.target.value)} name="availabilityStatus" id="availabilityStatus">
                     <option value="In Stock">In Stock</option>
                     <option value="Low Stock">Low Stock</option>
                     <option value="Out of Stock">Out of Stock</option>

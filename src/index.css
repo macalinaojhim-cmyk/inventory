@@ -92,8 +92,15 @@ main {
 table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 20px;
-  border: 1px solid #ddd;;
+  margin-top: 0px;
+  border: 1px solid #ddd;
+}
+
+.table-container{
+  max-height: 570px;
+  overflow-y: auto;
+  margin-top: 10px;
+  border-top: 1px solid #ddd;
 }
 
 th,
@@ -104,8 +111,13 @@ td {
   background: #ffffff;
 }
 
+
 th {
+  margin-top: 0;
   background: #f1f5f9;
+  position: sticky;
+  top: 0;
+  z-index: 1;
 }
 
 .reorder-required {

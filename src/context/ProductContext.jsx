@@ -6,7 +6,9 @@ export const ProductContext = createContext();
 export function ProductProvider({ children }) {
   const [productList, setProductList] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [category, setCategory] = useState("Others");
   const [categories, setCategories] = useState([]);
+  const [availabilityStatus, setAvailabilityStatus] = useState("In Stock");
 
   useEffect(() => {
     async function getItems() {
@@ -34,6 +36,7 @@ export function ProductProvider({ children }) {
       ...currentProducts,
       newProduct,
     ]);
+    
   }
 
   function rop(product) {
@@ -57,7 +60,9 @@ export function ProductProvider({ children }) {
       rop,
       eoq,
       loading,
-      categories
+      category, setCategory,
+      categories,
+      availabilityStatus, setAvailabilityStatus
     }}>
       {children}
     </ProductContext.Provider>

@@ -3,6 +3,7 @@ import 'ldrs/react/Bouncy.css'
 
 import { ProductContext } from "../context/ProductContext";
 import { useContext, useState } from "react";
+import ProductTable from '../components/ProductTable';
 
 export default function Dashbord() {
 
@@ -28,49 +29,7 @@ export default function Dashbord() {
                 </div>
             </div>
             <div className="products-table">
-                {!loading ? (<table>
-                    <thead>
-                        <tr>
-                            <th>Product</th>
-                            <th>Category</th>
-                            <th>Price</th>
-                            <th>Stock</th>
-
-                            <th>Status</th>
-                        </tr>
-                    </thead>
-
-                    <tbody>
-                        {productList.map((product) => (
-                            <tr key={product.id}>
-                                <td>{product.title}</td>
-                                <td>{product.category}</td>
-                                <td>₱{product.price}</td>
-                                <td>{product.stock}</td>
-
-                                <td>
-                                    <span className={
-                                        product.availabilityStatus === "Out of Stock"
-                                            ? "reorder-required"
-                                            : product.availabilityStatus === "Low Stock"
-                                                ? "low-stock"
-                                                : "in-stock"
-                                    }>
-                                        {product.availabilityStatus}
-                                    </span>
-                                </td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>) : 
-                <div className="loading">
-                    <Bouncy 
-                size="45"
-                speed="1.75"
-                color="black"
-            />
-                </div>
-                }
+                <ProductTable />
             </div>
         </div>
     )
