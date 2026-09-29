@@ -1,5 +1,4 @@
 import { createContext, useEffect, useState } from "react";
-import products from "../data/products";
 
 export const ProductContext = createContext();
 
@@ -50,15 +49,9 @@ export function ProductProvider({ children }) {
     setTotalStock(total)
   }
 
-  function rop(product) {
-    return product.dailyDemand * product.leadTime;
+  function editProduct(id){
+    
   }
-
-  function eoq(product) {
-    return Math.sqrt((2 * product.demand * product.orderingCost) / product.holdingCost);
-  }
-
-  
 
   if (loading) {
 
@@ -68,8 +61,6 @@ export function ProductProvider({ children }) {
     <ProductContext.Provider value={{
       productList,
       addProduct,
-      rop,
-      eoq,
       loading,
       category, setCategory,
       categories,

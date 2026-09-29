@@ -18,7 +18,7 @@ body {
 }
 
 .sidebar {
-  width: 250px;
+  width: 11vw;
   min-height: 100vh;
   padding: 24px 20px;
   background: #ffffff;
@@ -57,7 +57,7 @@ main {
   min-height: 100vh;
   padding: 30px;
   background: #f8fafc;
-  margin-left: 250px;
+  margin-left: 150px;
 }
 
 
@@ -121,9 +121,9 @@ table {
   border-top: 1px solid #ddd;
 }
 
-th,
+
 td {
-  padding: 2px;
+  padding: 20px;
   padding-top: 20px;
   padding-bottom: 20px;
   padding-right: 5px;
@@ -133,11 +133,13 @@ td {
 
 
 th {
+  padding:  20px;
   margin-top: 0;
   background: #f1f5f9;
   position: sticky;
   top: 0;
   z-index: 1;
+  text-align: start;
 }
 
 .reorder-required {
@@ -165,7 +167,8 @@ th {
 }
 
 button {
-  margin-top: 20px;
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
 
 
@@ -369,7 +372,7 @@ option{
  font-family: sans-serif;
 }
 
-.ask-modal-overlay {
+.edit-modal-overlay {
   position: fixed;
   inset: 0;
   background: rgba(15, 23, 42, 0.45);
@@ -379,7 +382,7 @@ option{
   z-index: 1000;
 }
 
-.ask-modal {
+.edit-modal {
   background: #ffffff;
   width: 500px;
   max-width: 100%;
@@ -387,4 +390,24 @@ option{
   border-radius: 14px;
   border: 1px solid #e2e8f0;
   box-shadow: 0 20px 50px rgba(15, 23, 42, 0.15);
+}
+
+.no-edit {
+  text-align: center;
+}
+
+.modal-content {
+  display: flex;
+  justify-content: space-between;
+}
+
+.edit-modal p{
+  padding: 10px;
+}
+
+.edit-product-form form {
+  display: flex;
+  flex-direction: column;
+  padding-top: 10px;
+  gap: 20px;
 }

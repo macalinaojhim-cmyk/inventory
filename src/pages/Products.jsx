@@ -102,7 +102,7 @@ function Products() {
                       type="number"
                       value={price}
                       onChange={(e) => setPrice(e.target.value)}
-                      placeholder="₱0.00"
+                      placeholder="$0.00"
                       min="0"
                       step="0.01"
                       required
