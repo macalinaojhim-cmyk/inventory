@@ -11,6 +11,16 @@ export function ProductProvider({ children }) {
   const [totalStock, setTotalStock] = useState();
   const [askModal, setAskModal] = useState(false);
 
+  const lowstocks = productList.filter(
+        (product) =>
+            product.availabilityStatus.toLowerCase() === "low stock"
+    );
+
+  const outOfStocks = productList.filter(
+        (product) =>
+            product.availabilityStatus.toLowerCase() === "out of stock"
+    );
+
   useEffect(() => {
     async function getItems() {
       try {
@@ -67,6 +77,8 @@ export function ProductProvider({ children }) {
       availabilityStatus, setAvailabilityStatus,
 
       totalStock,
+      lowstocks,
+      outOfStocks,
       deleteProduct
     }}>
       {children}
