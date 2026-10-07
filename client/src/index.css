@@ -18,7 +18,7 @@ body {
 }
 
 .sidebar {
-  width: 11vw;
+  width: 160px;
   min-height: 100vh;
   padding: 24px 20px;
   background: #ffffff;
@@ -54,18 +54,24 @@ body {
 
 main {
   flex: 1;
+  min-width: 0;
   min-height: 100vh;
   padding: 30px;
   background: #f8fafc;
   margin-left: 150px;
 }
 
-
-.card-container {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
+.dash-content {
+  display: flex;
   gap: 20px;
+  align-items: flex-start;
 }
+
+
+.right-container {
+  flex: 1;
+}
+
 
 .stock-list {
   display: flex;
@@ -76,6 +82,12 @@ main {
   border: 1px solid black;
   padding: 1px;
 
+}
+
+.card-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
 }
 
 .card {
@@ -105,42 +117,48 @@ main {
   font-size: 30px;
   font-weight: bold;
 }
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 0px;
-  border: 1px solid #ddd;
-}
-
-.table-container{
-  width: 100%;
+.table-container {
+  width: 60%;
   max-height: 570px;
   overflow-y: auto;
   margin-top: 10px;
   border-top: 1px solid #ddd;
 }
 
+table {
+  width: 100%;
+  max-width: 100%;
+  table-layout: fixed;
+  border-collapse: collapse;
+  margin-top: 0;
+  border: 1px solid #ddd;
+}
+
+th,
+td {
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
 
 td {
-  padding: 20px;
-  padding-top: 20px;
-  padding-bottom: 20px;
-  padding-right: 5px;
   border-bottom: 1px solid #ddd;
   background: #ffffff;
   text-align: center;
+  font-size: 15px;
 }
 
 
 th {
-  padding:  20px;
-  margin-top: 0;
+  padding: 12px 10px;
   background: #f1f5f9;
   position: sticky;
   top: 0;
   z-index: 1;
   text-align: center;
+
+  white-space: normal;
+  overflow-wrap: break-word;
+  word-break: normal;
 }
 
 .reorder-required {
@@ -249,7 +267,9 @@ button {
 }
 
 /* Form */
-
+#category {
+  margin-left: 0;
+}
 .form {
   display: flex;
   flex-direction: column;
@@ -402,15 +422,49 @@ option{
   justify-content: space-between;
 }
 
+.modal-content div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.modal-content div button {
+  margin-bottom: 0;
+}
+
+.current-new {
+  display: flex;
+  justify-content: space-around;
+}
+
+
+
 .edit-modal p{
   padding: 10px;
 }
 
-.edit-product-form form {
+.edit-product-form form .new-values {
   display: flex;
+  align-items: end;
   flex-direction: column;
   padding-top: 10px;
-  gap: 20px;
+  gap: 19px;
+  width: 200px;
+}
+
+
+
+.btn-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.btn-container button {
+  margin-left: -250px;
 }
 
 .delete-modal {

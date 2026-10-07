@@ -7,44 +7,104 @@ export function ProductProvider({ children }) {
   const [loading, setLoading] = useState(true);
   const [deleteModal, setDeleteModal] = useState(false);
 
-  const [category, setCategory] = useState("Others");
   const [categories, setCategories] = useState([]);
   const [availabilityStatus, setAvailabilityStatus] = useState("In Stock");
   const [totalStock, setTotalStock] = useState();
   const [askModal, setAskModal] = useState(false);
 
+  const getItems = async () => {
+    try {
+      const response = await fetch(
+        "http://localhost/inventory/server/getProducts.php"
+      );
 
+      const data = await response.json();
+
+      console.log("API data:", data);
+
+      setProductList(data);
+
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
   useEffect(() => {
-    const getItems = async () => {
-      try {
-        const response = await fetch(
-          "http://localhost/inventory/server/getProducts.php"
-        );
-
-        const data = await response.json();
-
-        console.log("API data:", data);
-
-        setProductList(data);
-
-      } catch (error) {
-        console.error(error);
-      } finally {
-        setLoading(false);
-      }
-    };
     getItems();
   }, []);
 
+  useEffect(() => {
+    const uniqueCategories = [
+      ...new Set(productList.map((product) => product.category))
+    ];
 
+    setCategories(uniqueCategories);
+  }, [productList]);
 
-  function addProduct(newProduct) {
-    setProductList((currentProducts) => [
-      ...currentProducts,
-      newProduct,
-    ]);
+  async function editProduct(id, updatedProduct) {
+    try {
+      const formData = new FormData();
 
+      formData.append("id", id);
+      formData.append("name", updatedProduct.name);
+      formData.append("category", updatedProduct.category);
+      formData.append("stock", updatedProduct.stock);
+      formData.append("daily_demand", updatedProduct.daily_demand);
+      formData.append("lead_time", updatedProduct.lead_time);
+      formData.append("ordering_cost", updatedProduct.ordering_cost);
+      formData.append("holding_cost", updatedProduct.holding_cost);
+
+      const response = await fetch(
+        "http://localhost/inventory/server/editProduct.php",
+        {
+          method: "POST",
+          body: formData
+        }
+      );
+
+      const data = await response.json();
+
+      console.log(data);
+
+      if (data.success) {
+        setProductList((prevProducts) =>
+          prevProducts.map((product) =>
+            product.id === id
+              ? { ...product, ...updatedProduct }
+              : product
+          )
+        );
+      }
+
+      return data;
+
+    } catch (error) {
+      console.error("Error editing product:", error);
+    }
   }
+
+  async function addProduct(product) {
+    const formData = new FormData();
+
+    formData.append("name", product.name);
+    formData.append("category", product.category);
+    formData.append("stock", product.stock);
+    formData.append("daily_demand", product.daily_demand);
+    formData.append("lead_time", product.lead_time);
+    formData.append("ordering_cost", product.ordering_cost);
+    formData.append("holding_cost", product.holding_cost);
+
+    const response = await fetch("http://localhost/inventory/server/addProduct.php", {
+      method: "POST",
+      body: formData
+    });
+
+    const data = await response.json();
+
+    console.log(data);
+    await getItems();
+  };
 
 
   async function deleteProduct(id) {
@@ -75,17 +135,24 @@ export function ProductProvider({ children }) {
     }
   }
 
+  function getTotalStocks(products) {
+    return products.reduce((total, product) => {
+      return total + Number(product.stock);
+    }, 0);
+  }
+
   if (loading) {
 
   }
 
   return (
     <ProductContext.Provider value={{
-      productList,
+      addProduct, editProduct, productList,
       deleteProduct,
+      categories,
 
       deleteModal, setDeleteModal,
-
+      getTotalStocks
     }}>
       {children}
     </ProductContext.Provider>

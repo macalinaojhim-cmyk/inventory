@@ -6,20 +6,44 @@ import Delete from "./Delete";
 
 
 export default function ProductTable() {
-    const { productList, loading, deleteModal,setDeleteModal} = useContext(ProductContext);
+    const { productList, loading, deleteModal, setDeleteModal, categories, editProduct } = useContext(ProductContext);
     const [selected, setSelected] = useState("");
     const [editModal, setEditModal] = useState(null);
     const [deleteId, setDeleteId] = useState(null);
-   
+
+    const [newName, setNewName] = useState("");
+    const [newCategory, setNewCategory] = useState(null);
+
+
 
     function handleSelect(e) {
         setSelected(e.target.value)
     }
 
+    async function handleSubmit(e) {
+        e.preventDefault();
+
+        const formData = new FormData(e.target);
+
+        const updatedProduct = {
+            name: formData.get("name"),
+            category: formData.get("category"),
+            stock: Number(formData.get("stock")),
+            daily_demand: Number(formData.get("daily_demand")),
+            lead_time: Number(formData.get("lead_time")),
+            ordering_cost: Number(formData.get("ordering_cost")),
+            holding_cost: Number(formData.get("holding_cost"))
+        };
+
+        await editProduct(editModal.id, updatedProduct);
+
+        setEditModal(null);
+    }
+
     function handleClick(id) {
         setDeleteId(id);
         setDeleteModal(true);
-        
+
     }
 
     return (
@@ -35,10 +59,10 @@ export default function ProductTable() {
                                     Category
                                     <select name="category" id="category" value={selected} onChange={handleSelect}>
                                         <option value="all">All</option>
-                                        
+
                                     </select>
                                 </th>
-                                
+
                                 <th>Stock</th>
                                 <th>Daily Demand</th>
                                 <th>Lead Time(Days)</th>
@@ -52,7 +76,7 @@ export default function ProductTable() {
                         <tbody>
                             {productList.filter((product) => selected === "" || selected === "all" || product.category === selected).map((product) => (
                                 <tr key={product.id}>
-                                    
+
                                     <td>{product.name}</td>
                                     <td>{product.category}</td>
                                     <td>{product.stock}</td>
@@ -86,50 +110,60 @@ export default function ProductTable() {
                     <div className="edit-modal">
                         <div className="no-edit">
                             <h2>Edit Product</h2>
-                            <p>ID: {editModal.id}</p>
-                            <h3>Product: {editModal.title}</h3>
+                            <h3>{editModal.name}</h3>
+                        </div>
+                        <div className="current-new">
+                            <h3>Current Values</h3>
+                            <h3>New Values</h3>
                         </div>
                         <div className="modal-content">
                             <div>
+                                <p>Name: {editModal.name}</p>
                                 <p>Category: {editModal.category}</p>
-                                <p>Price: ₱{(editModal.price * 58.7).toFixed(2)}</p>
                                 <p>Stock: {editModal.stock}</p>
+                                <p>Daily Demand</p>
+                                <p>Lead Time</p>
+                                <p>Ordering Cost</p>
+                                <p>Holding Cost</p>
                             </div>
 
                             <div className="edit-product-form">
-                                <form>
+                                <form onSubmit={handleSubmit}>
+                                    <div className="new-values">
+                                        <input type="text" name="name" />
 
-                                    <label htmlFor="">
-                                        New Category:
-                                        <select className="edit-select" name="" id="">
+                                        <select className="edit-select" name="category">
                                             {categories.map((categ) => (
-                                                <option key={categ} value={categ}>{categ}</option>
+                                                <option key={categ} value={categ}>
+                                                    {categ}
+                                                </option>
                                             ))}
                                         </select>
-                                    </label>
 
-                                    <label htmlFor="">
-                                        New Price:
-                                        <input type="number" name="new-name" />
-                                    </label>
+                                        <input type="number" name="stock" />
 
-                                    <label htmlFor="">
-                                        New Stock:
-                                        <input type="number" name="new-stock" />
-                                    </label>
+                                        <input type="number" name="daily_demand" />
 
+                                        <input type="number" name="lead_time" />
+
+                                        <input type="number" name="ordering_cost" />
+
+                                        <input type="number" name="holding_cost" />
+                                    </div>
+
+                                    <div className="btn-container">
+                                        <button type="submit">Submit</button>
+                                        <button type="button" onClick={() => setEditModal(null)} >Cancel</button>
+                                    </div>
                                 </form>
                             </div>
                         </div>
 
-                        <button onClick={() => setEditModal(null)}>
-                            Close
-                        </button>
                     </div>
                 </div>
             )}
             {deleteModal && (
-                <Delete id={deleteId}/>
+                <Delete id={deleteId} />
             )}
         </div>
     )

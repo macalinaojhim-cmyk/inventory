@@ -6,29 +6,40 @@ import ProductTable from "../components/ProductTable";
 
 function Products() {
   const [showModal, setShowModal] = useState(false);
-  const { productList, addProduct, loading, category, setCategory, categories, availabilityStatus, setAvailabilityStatus } = useContext(ProductContext);
+  const { productList, addProduct, loading, categories, availabilityStatus, setAvailabilityStatus } = useContext(ProductContext);
 
   const [name, setName] = useState("");
-  const [price, setPrice] = useState("");
+  const [category, setCategory] = useState("Others");
+  const [dailyDemand, setDaiyDemand] = useState(0);
+  const [leadTime, setLeadTime] = useState(0);
+  const [orderingCost, setSetOrderingCost] = useState(0);
+  const [holdingCost, setHoldingCost] = useState("0");
   const [stock, setStock] = useState("");
-  
+
   function handleSubmit(e) {
     e.preventDefault();
 
     const newProduct = {
-      id: productList.length + 1,
-      title: name,
+      name: name,
       category: category,
-      price: Number(price),
+      daily_demand: Number(dailyDemand),
+      lead_time: Number(leadTime),
+      ordering_cost: Number(orderingCost),
+      holding_cost: Number(holdingCost),
       stock: Number(stock),
-      availabilityStatus: availabilityStatus
+
     };
 
     addProduct(newProduct);
 
     setName("");
     setCategory("");
-    setPrice("");
+    setDaiyDemand("");
+    setDaiyDemand("");
+    setSetOrderingCost("");
+    setHoldingCost("");
+    setStock("");
+
     setStock("");
 
     setShowModal(false);
@@ -88,7 +99,7 @@ function Products() {
                       onChange={(e) => setCategory(e.target.value)}
                       required
                     >
-                      <option value="others">Others</option>
+                      <option value="Others">Others</option>
                       {categories.map((categ) => (
                         <option key={categ} value={categ}>{categ}</option>
                       ))}
@@ -96,40 +107,72 @@ function Products() {
                   </div>
 
                   <div className="form-group">
-                    <label htmlFor="price">Price</label>
+                    <label htmlFor="price">Daily Demand</label>
+                    <input
+                      id="daily_demand"
+                      type="number"
+                      value={dailyDemand}
+                      onChange={(e) => setDaiyDemand(e.target.value)}
+                      placeholder="0"
+                      min="0"
+                      required
+                    />
+                  </div>
+
+                  <div className="form-group">
+                    <label htmlFor="price">Lead Time (days)</label>
                     <input
                       id="price"
                       type="number"
-                      value={price}
-                      onChange={(e) => setPrice(e.target.value)}
-                      placeholder="$0.00"
+                      value={leadTime}
+                      onChange={(e) => setLeadTime(e.target.value)}
+                      placeholder="0"
                       min="0"
-                      step="0.01"
+                      required
+                    />
+                  </div>
+
+                  <div className="form-group">
+                    <label htmlFor="price">Ordering Cost</label>
+                    <input
+                      id="price"
+                      type="number"
+                      value={orderingCost}
+                      onChange={(e) => setSetOrderingCost(e.target.value)}
+                      placeholder="1.4"
+                      min="0"
+                      required
+                    />
+                  </div>
+
+                  <div className="form-group">
+                    <label htmlFor="price">Holding Cost</label>
+                    <input
+                      id="price"
+                      type="number"
+                      value={holdingCost}
+                      onChange={(e) => setHoldingCost(e.target.value)}
+                      placeholder="0.5"
+                      min="0"
+                      required
+                    />
+                  </div>
+
+                  <div className="form-group">
+                    <label htmlFor="stock">Stock</label>
+                    <input
+                      id="stock"
+                      type="number"
+                      value={stock}
+                      onChange={(e) => setStock(e.target.value)}
+                      placeholder="Enter stock quantity"
+                      min="0"
                       required
                     />
                   </div>
                 </div>
 
-                <div className="form-group">
-                  <label htmlFor="stock">Initial Stock</label>
-                  <input
-                    id="stock"
-                    type="number"
-                    value={stock}
-                    onChange={(e) => setStock(e.target.value)}
-                    placeholder="Enter stock quantity"
-                    min="0"
-                    required
-                  />
-                </div>
 
-                <div>
-                  <select value={availabilityStatus} onChange={(e) => setAvailabilityStatus(e.target.value)} name="availabilityStatus" id="availabilityStatus">
-                    <option value="In Stock">In Stock</option>
-                    <option value="Low Stock">Low Stock</option>
-                    <option value="Out of Stock">Out of Stock</option>
-                  </select>
-                </div>
               </div>
 
               <div className="modal-actions">
