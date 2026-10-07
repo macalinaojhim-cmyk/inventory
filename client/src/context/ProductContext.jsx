@@ -5,42 +5,38 @@ export const ProductContext = createContext();
 export function ProductProvider({ children }) {
   const [productList, setProductList] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [deleteModal, setDeleteModal] = useState(false);
+
   const [category, setCategory] = useState("Others");
   const [categories, setCategories] = useState([]);
   const [availabilityStatus, setAvailabilityStatus] = useState("In Stock");
   const [totalStock, setTotalStock] = useState();
   const [askModal, setAskModal] = useState(false);
 
-  const lowstocks = productList.filter(
-        (product) =>
-            product.availabilityStatus.toLowerCase() === "low stock"
-    );
-
-  const outOfStocks = productList.filter(
-        (product) =>
-            product.availabilityStatus.toLowerCase() === "out of stock"
-    );
 
   useEffect(() => {
-    async function getItems() {
+    const getItems = async () => {
       try {
-
-        const response = await fetch("https://dummyjson.com/products?limit=190");
+        const response = await fetch(
+          "http://localhost/inventory/server/getProducts.php"
+        );
 
         const data = await response.json();
-        setProductList(data.products);
 
-        const uniqueCategories = [...new Set(data.products.map((p) => p.category))];
-        setCategories(uniqueCategories);
-      }
-      catch (error) {
+        console.log("API data:", data);
+
+        setProductList(data);
+
+      } catch (error) {
         console.error(error);
       } finally {
         setLoading(false);
       }
-    }
+    };
     getItems();
   }, []);
+
+
 
   function addProduct(newProduct) {
     setProductList((currentProducts) => [
@@ -50,17 +46,33 @@ export function ProductProvider({ children }) {
 
   }
 
-  function deleteProduct(productId){
-    setProductList(productList.filter((product) => product.id !== productId));
-  }
 
-  function toggleStock(){
-    const total = productList.reduce((sum, product) => sum + product.stock, 0);
-    setTotalStock(total)
-  }
+  async function deleteProduct(id) {
+    try {
+      const response = await fetch(
+        "http://localhost/inventory/server/deleteProduct.php",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+          body: `id=${id}`,
+        }
+      );
 
-  function editProduct(id){
-    
+      const data = await response.json();
+
+      console.log(data);
+
+      setProductList((currentProducts) =>
+        currentProducts.filter((product) => product.id !== id)
+      );
+
+      setDeleteModal(false);
+
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   if (loading) {
@@ -70,16 +82,10 @@ export function ProductProvider({ children }) {
   return (
     <ProductContext.Provider value={{
       productList,
-      addProduct,
-      loading,
-      category, setCategory,
-      categories,
-      availabilityStatus, setAvailabilityStatus,
+      deleteProduct,
 
-      totalStock,
-      lowstocks,
-      outOfStocks,
-      deleteProduct
+      deleteModal, setDeleteModal,
+
     }}>
       {children}
     </ProductContext.Provider>

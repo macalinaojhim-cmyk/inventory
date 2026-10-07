@@ -2,19 +2,24 @@ import { useContext, useState } from "react";
 import { ProductContext } from "../context/ProductContext";
 import { Bouncy } from 'ldrs/react'
 import { Trash, Pencil } from "lucide-react";
+import Delete from "./Delete";
 
 
 export default function ProductTable() {
-    const { productList, addProduct, deleteProduct, items, loading, categories, availabilityStatus, setAvailabilityStatus } = useContext(ProductContext);
+    const { productList, loading, deleteModal,setDeleteModal} = useContext(ProductContext);
     const [selected, setSelected] = useState("");
     const [editModal, setEditModal] = useState(null);
+    const [deleteId, setDeleteId] = useState(null);
+   
 
     function handleSelect(e) {
         setSelected(e.target.value)
     }
 
     function handleClick(id) {
-        deleteProduct(id)
+        setDeleteId(id);
+        setDeleteModal(true);
+        
     }
 
     return (
@@ -25,19 +30,20 @@ export default function ProductTable() {
                     <table>
                         <thead>
                             <tr>
-                                <th>ID</th>
                                 <th>Products</th>
                                 <th>
                                     Category
                                     <select name="category" id="category" value={selected} onChange={handleSelect}>
                                         <option value="all">All</option>
-                                        {categories.map((categ) => (
-                                            <option key={categ} value={categ}>{categ}</option>
-                                        ))}
+                                        
                                     </select>
                                 </th>
-                                <th>Price</th>
+                                
                                 <th>Stock</th>
+                                <th>Daily Demand</th>
+                                <th>Lead Time(Days)</th>
+                                <th>Ordering Cost</th>
+                                <th>Holding Cost</th>
                                 <th>Status</th>
                                 <th>Action</th>
                             </tr>
@@ -46,22 +52,15 @@ export default function ProductTable() {
                         <tbody>
                             {productList.filter((product) => selected === "" || selected === "all" || product.category === selected).map((product) => (
                                 <tr key={product.id}>
-                                    <td>{product.id}</td>
-                                    <td>{product.title}</td>
+                                    
+                                    <td>{product.name}</td>
                                     <td>{product.category}</td>
-                                    <td>₱{(product.price * 58.7).toFixed(2)}</td>
                                     <td>{product.stock}</td>
-                                    <td>
-                                        <span className={
-                                            product.availabilityStatus === "Out of Stock"
-                                                ? "reorder-required"
-                                                : product.availabilityStatus === "Low Stock"
-                                                    ? "low-stock"
-                                                    : "in-stock"
-                                        }>
-                                            {product.availabilityStatus}
-                                        </span>
-                                    </td>
+                                    <td>{product.daily_demand}</td>
+                                    <td>{product.lead_time}</td>
+                                    <td>{product.ordering_cost}</td>
+                                    <td>{product.holding_cost}</td>
+                                    <td></td>
                                     <td>
                                         <button onClick={() => setEditModal(product)}>
                                             <Pencil size={15} />
@@ -128,6 +127,9 @@ export default function ProductTable() {
                         </button>
                     </div>
                 </div>
+            )}
+            {deleteModal && (
+                <Delete id={deleteId}/>
             )}
         </div>
     )

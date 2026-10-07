@@ -1,7 +1,6 @@
 import Sidebar from "./components/Sidebar"
 import Dashboard from "./pages/Dashboard"
 import Products from "./pages/Products"
-import EOQ from "./pages/EOQ"
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import { ProductProvider } from "./context/ProductContext"
 

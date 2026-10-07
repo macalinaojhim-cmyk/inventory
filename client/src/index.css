@@ -129,6 +129,7 @@ td {
   padding-right: 5px;
   border-bottom: 1px solid #ddd;
   background: #ffffff;
+  text-align: center;
 }
 
 
@@ -139,7 +140,7 @@ th {
   position: sticky;
   top: 0;
   z-index: 1;
-  text-align: start;
+  text-align: center;
 }
 
 .reorder-required {
@@ -410,4 +411,33 @@ option{
   flex-direction: column;
   padding-top: 10px;
   gap: 20px;
+}
+
+.delete-modal {
+  position: fixed;
+  inset: 0;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+}
+
+.delete-modal-content{
+  width: 300px;
+  height: 150px;
+  background-color: #f8fafc;
+  border-radius: 10px;
+  border: 1px solid #e2e8f0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.delete-modal-content div{
+  display: flex;
+  gap: 50px;
+  margin-top: 20px;
 }
