@@ -3,8 +3,20 @@ import Dashboard from "./pages/Dashboard"
 import Products from "./pages/Products"
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import { ProductProvider } from "./context/ProductContext"
+import { UserContext } from "./context/UserContext"
+import { useContext } from "react";
+import Login from "./pages/Login"
 
 function App() {
+  const {login} = useContext(UserContext)
+
+  if(!login){
+    return (
+      <div>
+        <Login />
+      </div>
+    )
+  }
   return (
    < ProductProvider>
     <BrowserRouter>
@@ -15,6 +27,7 @@ function App() {
 
         <main>
           <Routes>
+
             <Route path="/" element={<Dashboard />} />
             <Route path="/products" element={<Products />} />
             
