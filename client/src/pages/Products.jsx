@@ -56,7 +56,7 @@ function Products() {
         <button onClick={() => setShowModal(true)}>Add Product</button>
       </div>
 
-      <ProductTable />
+      <ProductTable className="product-table" />
 
       {showModal && (
         <div className="add-product-modal">

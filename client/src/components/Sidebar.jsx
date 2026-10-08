@@ -1,15 +1,25 @@
-import { Link } from "react-router-dom"
+import { useContext } from "react";
+import { Link } from "react-router-dom";
+import { UserContext } from "../context/UserContext";
 
 export default function Sidebar() {
-  return (
-    <div className="sidebar">
-      <h1>Inventory Management System</h1>
 
-      <nav>
-        <Link to="/">Dashboard</Link>
-        <Link to="/products">Products</Link>
-        
-      </nav>
-    </div>
-  )
+    const { logout } = useContext(UserContext);
+
+    return (
+        <div className="sidebar">
+            <h1>Inventory Management System</h1>
+
+            <div className="sidebar-content">
+                <nav>
+                    <Link to="/">Dashboard</Link>
+                    <Link to="/products">Products</Link>
+                </nav>
+
+                <button onClick={logout}>
+                    Log Out
+                </button>
+            </div>
+        </div>
+    );
 }
