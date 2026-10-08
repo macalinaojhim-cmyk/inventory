@@ -20,9 +20,9 @@ export default function Login() {
                         </div>
                         <form onSubmit={handleSubmit} >
                             <User size={20} className="input-icon" />
-                            <input type="email" name="email" placeholder="Email Address" />
+                            <input className="login-input" type="email" name="email" placeholder="Email Address" />
                             <Lock size={20} className="input-icon-lock" />
-                            <input type="password" name="password" placeholder="Password" />
+                            <input className="login-input" type="password" name="password" placeholder="Password" />
                             <button type="submit" className="login-btn">Log in</button>
                         </form>
                     </div>

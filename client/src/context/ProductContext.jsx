@@ -141,6 +141,18 @@ export function ProductProvider({ children }) {
     }, 0);
   }
 
+  function eoq(product){
+    return Math.round(Math.sqrt((2 * product.daily_demand * 365 * product.ordering_cost) / product.holding_cost));
+  }
+
+  function eoi(product){
+    return Math.round(eoq(product)/(product.daily_demand * 365) * 365);
+  }
+
+  function rop(product){
+    return product.daily_demand * product.lead_time;
+  }
+
   if (loading) {
 
   }
@@ -150,6 +162,8 @@ export function ProductProvider({ children }) {
       addProduct, editProduct, productList,
       deleteProduct,
       categories,
+
+      eoq, eoi, rop,
 
       deleteModal, setDeleteModal,
       getTotalStocks
