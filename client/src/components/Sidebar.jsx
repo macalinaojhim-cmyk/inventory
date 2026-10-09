@@ -14,9 +14,8 @@ export default function Sidebar() {
                 <nav>
                     <Link to="/">Dashboard</Link>
                     <Link to="/products">Products</Link>
-                </nav>
-
-                
+                    <Link>Orders</Link>
+                </nav> 
             </div><button onClick={logout}>
                     Log Out
                 </button>
