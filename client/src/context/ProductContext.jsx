@@ -8,9 +8,7 @@ export function ProductProvider({ children }) {
   const [deleteModal, setDeleteModal] = useState(false);
 
   const [categories, setCategories] = useState([]);
-  const [availabilityStatus, setAvailabilityStatus] = useState("In Stock");
-  const [totalStock, setTotalStock] = useState();
-  const [askModal, setAskModal] = useState(false);
+  const [lowStocks, setLowStocks] = useState([]);
 
   const getItems = async () => {
     try {
@@ -141,15 +139,21 @@ export function ProductProvider({ children }) {
     }, 0);
   }
 
-  function eoq(product){
+  function getLowStock() {
+  return productList.filter(
+    (product) => Number(product.stock) <= rop(product)
+  );
+}
+
+  function eoq(product) {
     return Math.round(Math.sqrt((2 * product.daily_demand * 365 * product.ordering_cost) / product.holding_cost));
   }
 
-  function eoi(product){
-    return Math.round(eoq(product)/(product.daily_demand * 365) * 365);
+  function eoi(product) {
+    return Math.round(eoq(product) / (product.daily_demand * 365) * 365);
   }
 
-  function rop(product){
+  function rop(product) {
     return product.daily_demand * product.lead_time;
   }
 
@@ -164,6 +168,8 @@ export function ProductProvider({ children }) {
       categories,
 
       eoq, eoi, rop,
+
+      getLowStock,
 
       deleteModal, setDeleteModal,
       getTotalStocks

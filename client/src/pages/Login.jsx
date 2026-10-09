@@ -1,12 +1,21 @@
 import { User, Lock } from "lucide-react"
 import { UserContext } from "../context/UserContext";
 import { useContext, useState } from "react";
+import { Ring } from 'ldrs/react'
+import 'ldrs/react/Ring.css'
 
 export default function Login() {
     const { login } = useContext(UserContext);
-    function handleSubmit(e) {
+    const [loading, setLoading] = useState(false);
+    async function handleSubmit(e) {
         e.preventDefault();
-        login(e.target);
+        setLoading(true);
+        try {
+            await login(e.target);
+        } finally {
+            setLoading(false);
+        }
+
     }
 
     return (
@@ -23,7 +32,14 @@ export default function Login() {
                             <input className="login-input" type="email" name="email" placeholder="Email Address" />
                             <Lock size={20} className="input-icon-lock" />
                             <input className="login-input" type="password" name="password" placeholder="Password" />
-                            <button type="submit" className="login-btn">Log in</button>
+                            <button type="submit" className="login-btn">{!loading ? "Log In" :
+                                <Ring
+                                    size="20"
+                                    stroke="5"
+                                    bgOpacity="0"
+                                    speed="2"
+                                    color="white"
+                                />}</button>
                         </form>
                     </div>
                 </div>

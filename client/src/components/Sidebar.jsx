@@ -16,10 +16,10 @@ export default function Sidebar() {
                     <Link to="/products">Products</Link>
                 </nav>
 
-                <button onClick={logout}>
+                
+            </div><button onClick={logout}>
                     Log Out
                 </button>
-            </div>
         </div>
     );
 }

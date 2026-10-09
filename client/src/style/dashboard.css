@@ -1,0 +1,187 @@
+.card-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+.card {
+    display: flex;
+    background: #ffffff;
+    padding: 24px;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.10);
+    height: 150px;
+    overflow-y: auto;
+}
+
+.card h2 {
+    font-size: 16px;
+    font-weight: 500;
+    color: #64748b;
+    margin-bottom: 12px;
+}
+
+.card p {
+    color: #0f172a;
+    display: flex;
+    flex-direction: column;
+}
+
+.card .num {
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.icon {
+    margin-right: 30px;
+    margin-bottom: 50px;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.box {
+    background-color: rgba(113, 104, 250, 0.596);
+}
+
+.warehouse {
+    background-color: rgba(8, 219, 8, 0.2);
+}
+
+.alert {
+    background-color: rgba(250, 136, 136, 0.2);
+}
+
+.total-product-card {
+    background-color: rgba(113, 104, 250, 0.14);
+}
+
+.total-stock-card {
+    background-color: rgba(8, 219, 8, 0.10);
+}
+
+.low-stock-card {
+    background-color: rgba(250, 136, 136, 0.1);
+}
+
+.dash-content {
+    display: flex;
+    gap: 20px;
+}
+
+.dash-table {
+    margin-top: 15px;
+    border: none;
+}
+
+.dash-table th,
+td {
+    
+    padding: 10px;
+    border: none;
+}
+
+p {
+    font-family: "Roboto", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 100;
+  font-style: normal;
+  font-variation-settings:
+    "wdth" 100;
+}
+.dash-products-table {
+    width: 60%;
+    box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
+    height: 100%;
+    margin-top: 20px;
+}
+
+.dash-products-table h2 {
+    padding: 10px;
+}
+
+.dash-products-table a {
+    display: block;
+    padding: 10px;
+    margin-top: 10px;
+    color: #645bff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.view-all-prod-btn {
+    display: block;
+    padding: 10px;
+    margin-top: 10px;
+    color: #645bff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.dash-products-table a:hover {
+    color: #111;
+    transition: 0.2s;
+}
+
+.right-container {
+    margin-top: 20px;
+    width: 40%;
+}
+
+.low-stock-alert {
+    box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
+    height: 550px;
+}
+
+.low-stock-alert-header {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    padding-top: 50px;
+    padding-bottom: 5px;
+    gap: 10px;
+}
+.low-stock-alert-logo {
+    display: flex;
+    gap: 10px;
+}
+
+.low-stock-alert-header a div{
+    display: flex;
+}
+
+.low-stock-alert-header a {
+    text-decoration: none;
+}
+
+.low-stock-alert-content {
+    padding: 10px;
+    padding-left: 25px;
+    padding-right: 25px;
+}
+
+.item {
+    font-weight: 600;
+    color: #494949;
+}
+
+.stock-rop-eoq {
+    font-weight: 100;
+    color: #6B7280;
+}
+
+.low-stock-alert-content div {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+.low-stock-alert button {
+    margin: 0%;
+    color: red;
+    border-radius: 10px;
+    background-color: rgba(252, 130, 130, 0.668);
+}
