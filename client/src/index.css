@@ -422,7 +422,7 @@ option {
   justify-content: center;
 }
 
-.edit-product-form form .new-values input, select{
+.edit-product-form form .new-values input, .edit-select{
   margin-bottom: 10%;
   padding: 10px;
   width: 300px;
