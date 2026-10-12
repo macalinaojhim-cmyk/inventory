@@ -1,3 +1,10 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+* {
+    font-family: 'Inter', sans-serif;
+}
+
 .card-container {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -30,7 +37,7 @@
 
 .card .num {
     font-size: 30px;
-    font-weight: bold;
+    font-weight: 700;
 }
 
 .icon {
@@ -76,20 +83,17 @@
 }
 
 .dash-table th,
-td {
-    
+.dash-table td {
     padding: 10px;
     border: none;
 }
 
 p {
-    font-family: "Roboto", sans-serif;
-  font-optical-sizing: auto;
-  font-weight: 100;
-  font-style: normal;
-  font-variation-settings:
-    "wdth" 100;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.6;
 }
+
 .dash-products-table {
     box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.1);
     border-radius: 15px;
@@ -99,6 +103,8 @@ p {
 
 .dash-products-table h2 {
     padding: 10px;
+    font-size: 18px;
+    font-weight: 600;
 }
 
 .dash-products-table a {
@@ -107,7 +113,7 @@ p {
     margin-top: 10px;
     color: #645bff;
     text-decoration: none;
-    font-weight: bold;
+    font-weight: 600;
 }
 
 .view-all-prod-btn {
@@ -116,7 +122,7 @@ p {
     margin-top: 10px;
     color: #645bff;
     text-decoration: none;
-    font-weight: bold;
+    font-weight: 600;
 }
 
 .dash-products-table a:hover {
@@ -127,7 +133,6 @@ p {
 .left-container {
     width: 60%;
     display: flex;
-    gap: 20px;
     flex-direction: column;
 }
 
@@ -139,23 +144,24 @@ p {
 .low-stock-alert {
     box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.1);
     border-radius: 15px;
-    height: 550px;
+    height: 620px;
 }
 
 .low-stock-alert-header {
     display: flex;
     justify-content: space-between;
     padding: 20px;
-    padding-top: 50px;
+    padding-top: 30px;
     padding-bottom: 5px;
     gap: 10px;
 }
+
 .low-stock-alert-logo {
     display: flex;
     gap: 10px;
 }
 
-.low-stock-alert-header a div{
+.low-stock-alert-header a div {
     display: flex;
 }
 
@@ -164,9 +170,7 @@ p {
 }
 
 .low-stock-alert-content {
-    padding: 10px;
-    padding-left: 25px;
-    padding-right: 25px;
+    padding: 10px 25px;
 }
 
 .item {
@@ -175,7 +179,7 @@ p {
 }
 
 .stock-rop-eoq {
-    font-weight: 100;
+    font-weight: 400;
     color: #6B7280;
 }
 
@@ -190,6 +194,8 @@ p {
     margin: 0%;
     color: red;
     border-radius: 10px;
+    margin-top: 15px;
+    margin-bottom: 15px;
     background-color: rgba(252, 130, 130, 0.668);
 }
 
@@ -227,16 +233,15 @@ p {
 }
 
 .category-chart {
-  background: #ffffff;
-  padding: 24px;
-  border-radius: 12px;
-  border: 1px solid #e5e7eb;
+    background: #ffffff;
+    padding: 24px;
+    border-radius: 12px;
+    border: 1px solid #e5e7eb;
 }
 
 .category-chart h2 {
-  font-size: 18px;
-  font-weight: 600;
-  color: #374151;
-  margin: 0 0 16px;
+    font-size: 18px;
+    font-weight: 600;
+    color: #374151;
+    margin: 0 0 16px;
 }
-

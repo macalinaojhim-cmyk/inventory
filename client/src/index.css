@@ -329,7 +329,7 @@ button {
   --hover-color: #111;
   --arrow-width: 10px;
   --arrow-stroke: 2px;
-  box-sizing: border-box;
+
   border: 0;
   border-radius: 20px;
   color: var(--secondary-color);
@@ -393,10 +393,7 @@ option {
   text-align: center;
 }
 
-.modal-content {
-  display: flex;
-  justify-content: space-between;
-}
+
 
 .modal-content div {
   display: flex;
@@ -419,28 +416,19 @@ option {
   padding: 10px;
 }
 
-.edit-product-form form .new-values {
-  display: flex;
-  align-items: end;
-  flex-direction: column;
-  padding-top: 10px;
-  gap: 19px;
-  width: 200px;
-}
-
-
-
-.btn-container {
+.edit-product-form form{
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
-  gap: 10px;
-  margin-top: 20px;
 }
 
-.btn-container button {
-  margin-left: -250px;
+.edit-product-form form .new-values input, select{
+  margin-bottom: 10%;
+  padding: 10px;
+  width: 300px;
+  text-align: center;
+  border: none;
+  border: 1px solid #e2e8f0;
 }
 
 .delete-modal {

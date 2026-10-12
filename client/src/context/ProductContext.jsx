@@ -8,7 +8,6 @@ export function ProductProvider({ children }) {
   const [deleteModal, setDeleteModal] = useState(false);
 
   const [categories, setCategories] = useState([]);
-  const [lowStocks, setLowStocks] = useState([]);
 
   const getItems = async () => {
     try {
@@ -140,10 +139,58 @@ export function ProductProvider({ children }) {
   }
 
   function getLowStock() {
-  return productList.filter(
-    (product) => Number(product.stock) <= rop(product)
-  );
-}
+    return productList.filter(
+      (product) => Number(product.stock) <= rop(product)
+    );
+  }
+
+
+  function getStatus(product) {
+    const stock = Number(product.stock);
+    const reorderPoint = Number(rop(product));
+
+    if (stock <= 0) {
+      return (
+        <span style={{
+          backgroundColor: '#fee2e2',
+          color: '#dc2626',
+          padding: '5px 10px',
+          borderRadius: '10px',
+          fontSize: '12px',
+          fontWeight: '500'
+        }}>
+          Out of Stock
+        </span>
+      );
+    } else if (stock <= reorderPoint) {
+      return (
+        <span style={{
+          backgroundColor: '#fef3c7',
+          color: '#d97706',
+          padding: '5px 10px',
+          borderRadius: '10px',
+          fontSize: '12px',
+          fontWeight: '500'
+        }}>
+          Low Stock
+        </span>
+      );
+    } else {
+      return (
+        <span style={{
+          backgroundColor: '#dcfce7',
+          color: '#16a34a',
+          padding: '5px 10px',
+          borderRadius: '10px',
+          fontSize: '12px',
+          fontWeight: '500'
+        }}>
+          In Stock
+        </span>
+      );
+    }
+  }
+
 
   function eoq(product) {
     return Math.round(Math.sqrt((2 * product.daily_demand * 365 * product.ordering_cost) / product.holding_cost));
@@ -157,9 +204,13 @@ export function ProductProvider({ children }) {
     return product.daily_demand * product.lead_time;
   }
 
-  if (loading) {
+  function transaction(){
 
   }
+
+
+
+
 
   return (
     <ProductContext.Provider value={{
@@ -169,7 +220,7 @@ export function ProductProvider({ children }) {
 
       eoq, eoi, rop,
 
-      getLowStock,
+      getLowStock, getStatus,
 
       deleteModal, setDeleteModal,
       getTotalStocks

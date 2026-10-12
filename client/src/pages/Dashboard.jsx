@@ -3,12 +3,15 @@ import { Link } from "react-router-dom";
 import { Box, Warehouse, TriangleAlert, MoveRight, ArrowRight, Clock, ChartPie } from "lucide-react";
 import 'ldrs/react/Bouncy.css'
 
+import LowStockAlert from "../components/LowStockAlert.jsx"
+
 import { ProductContext } from "../context/ProductContext";
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
+import RecentTransaction from "../components/RecentTransaction.jsx";
 
 export default function Dashbord() {
 
-    const { productList, getTotalStocks, getLowStock, lowStocks,
+    const { productList, getTotalStocks, getLowStock, getStatus, lowStocks,
         eoq, eoi, rop } = useContext(ProductContext);
     return (
         <div>
@@ -47,6 +50,17 @@ export default function Dashbord() {
             </div>
             <div className='dash-content'>
                 <div className="left-container">
+                    <div className="stocks-by-category">
+                        <div className="sbc-header">
+                            <ChartPie size={30} />
+                            <h2>Stocks by Category</h2>
+                        </div>
+                        <div className="sbc-content">
+                            <div className="chart">
+                                <CategoryChart products={productList} />
+                            </div>
+                        </div>
+                    </div>
                     <div className="dash-products-table">
                         <h2>Products</h2>
                         <table className='dash-table'>
@@ -71,7 +85,7 @@ export default function Dashbord() {
                                             <td>{eoq(product)}</td>
                                             <td>{eoi(product)}-Days</td>
                                             <td>{rop(product)}</td>
-                                            <td></td>
+                                            <td>{getStatus(product)}</td>
                                         </tr>
                                     ))
                                 }
@@ -84,51 +98,11 @@ export default function Dashbord() {
                             </div>
                         </Link>
                     </div>
-                    <div className="stocks-by-category">
-                        <div className="sbc-header">
-                            <ChartPie size={30} />
-                            <h2>Stocks by Category</h2>
-                        </div>
-                        <div className="sbc-content">
-                            <div className="chart">
-                                <CategoryChart products={productList} />
-                            </div>
-                        </div>
-                    </div>
                 </div>
+             
                 <div className='right-container'>
-                    <div className="low-stock-alert">
-                        <div className="low-stock-alert-header">
-                            <div className="low-stock-alert-logo">
-                                <TriangleAlert size={30} color="red" />
-                                <h2>Low Stock Alerts</h2>
-                            </div>
-
-                            <a href="">
-                                <div className="view-all-prod-btn"><p >View All</p><ArrowRight size={20} /></div>
-                            </a>
-                        </div>
-                        <div className="low-stock-alert-content">
-
-                            {getLowStock().slice(0, 5).map((item) => (
-                                <div>
-                                    <p>
-                                        <h4 className="item">{item.name}</h4>
-                                        <p className="stock-rop-eoq">Stock: {item.stock} | ROP: {rop(item)}</p>
-                                        <p className="stock-rop-eoq">Recommended Quantity: {eoq(item)}</p>
-                                    </p>
-                                    <button >Reorder</button>
-                                </div>
-                            ))}
-
-                        </div>
-                    </div>
-                    <div className="transactions">
-                        <div className="transaction-header">
-                            <Clock size={30} />
-                            <h2>Recent Transactions</h2>
-                        </div>
-                    </div>
+                    <LowStockAlert />
+                    <RecentTransaction />
                 </div>
             </div>
 

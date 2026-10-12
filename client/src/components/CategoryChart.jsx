@@ -8,12 +8,30 @@ import {
 } from "recharts";
 
 const COLORS = [
-    "#6366F1",
-    "#14B8A6",
-    "#F59E0B",
-    "#EF4444",
-    "#8B5CF6",
-    "#06B6D4"
+"#6366F1", // Indigo
+"#14B8A6", // Teal
+"#F59E0B", // Amber
+"#EF4444", // Red
+"#8B5CF6", // Violet
+"#06B6D4", // Cyan
+"#EC4899", // Pink
+"#84CC16", // Lime
+"#F97316", // Orange
+"#3B82F6", // Blue
+"#10B981", // Emerald
+"#A855F7", // Purple
+"#E11D48", // Rose
+"#0D9488", // Dark Teal
+"#D946EF", // Fuchsia
+"#65A30D", // Dark Lime
+"#2563EB", // Dark Blue
+"#CA8A04", // Dark Yellow
+"#DC2626", // Dark Red
+"#7C3AED", // Dark Violet
+"#0891B2", // Dark Cyan
+"#EA580C", // Dark Orange
+"#4F46E5", // Deep Indigo
+"#059669", // Dark Emerald
 ];
 
 

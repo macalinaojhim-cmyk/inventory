@@ -6,15 +6,10 @@ import Delete from "./Delete";
 
 
 export default function ProductTable() {
-    const { productList, loading, deleteModal, setDeleteModal, categories, editProduct } = useContext(ProductContext);
+    const { productList, loading, deleteModal, setDeleteModal, categories, editProduct, getStatus } = useContext(ProductContext);
     const [selected, setSelected] = useState("");
     const [editModal, setEditModal] = useState(null);
     const [deleteId, setDeleteId] = useState(null);
-
-    const [newName, setNewName] = useState("");
-    const [newCategory, setNewCategory] = useState(null);
-
-
 
     function handleSelect(e) {
         setSelected(e.target.value)
@@ -84,7 +79,7 @@ export default function ProductTable() {
                                     <td>{product.lead_time}</td>
                                     <td>{product.ordering_cost}</td>
                                     <td>{product.holding_cost}</td>
-                                    <td></td>
+                                    <td>{getStatus(product)}</td>
                                     <td>
                                         <button onClick={() => setEditModal(product)}>
                                             <Pencil size={15} />
@@ -112,25 +107,11 @@ export default function ProductTable() {
                             <h2>Edit Product</h2>
                             <h3>{editModal.name}</h3>
                         </div>
-                        <div className="current-new">
-                            <h3>Current Values</h3>
-                            <h3>New Values</h3>
-                        </div>
                         <div className="modal-content">
-                            <div>
-                                <p>Name: {editModal.name}</p>
-                                <p>Category: {editModal.category}</p>
-                                <p>Stock: {editModal.stock}</p>
-                                <p>Daily Demand</p>
-                                <p>Lead Time</p>
-                                <p>Ordering Cost</p>
-                                <p>Holding Cost</p>
-                            </div>
-
                             <div className="edit-product-form">
                                 <form onSubmit={handleSubmit}>
                                     <div className="new-values">
-                                        <input type="text" name="name" />
+                                        <input type="text" name="name" defaultValue={editModal.name}/>
 
                                         <select className="edit-select" name="category">
                                             {categories.map((categ) => (
@@ -140,18 +121,18 @@ export default function ProductTable() {
                                             ))}
                                         </select>
 
-                                        <input type="number" name="stock" />
+                                        <input type="number" name="stock" defaultValue={editModal.stock} />
 
-                                        <input type="number" name="daily_demand" />
+                                        <input type="number" name="daily_demand" defaultValue={editModal.daily_demand} />
 
-                                        <input type="number" name="lead_time" />
+                                        <input type="number" name="lead_time" defaultValue={editModal.lead_time}/>
 
-                                        <input type="number" name="ordering_cost" />
+                                        <input type="number" name="ordering_cost" defaultValue={editModal.ordering_cost}/>
 
-                                        <input type="number" name="holding_cost" />
+                                        <input type="number" name="holding_cost" defaultValue={editModal.holding_cost} />
                                     </div>
 
-                                    <div className="btn-container">
+                                    <div style={{display:'inline', textAlign:'center'}} className="btn-container">
                                         <button type="submit">Submit</button>
                                         <button type="button" onClick={() => setEditModal(null)} >Cancel</button>
                                     </div>
