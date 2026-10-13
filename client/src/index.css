@@ -16,9 +16,9 @@ body {
 }
 
 .sidebar {
-  width: 160px;
+  width: 170px;
   min-height: 100vh;
-  padding: 24px 20px;
+  padding: 14px 10px;
   background: #ffffff;
   border-right: 1px solid #e2e8f0;
   flex-shrink: 0;
@@ -92,10 +92,11 @@ main {
 
 .table-container {
   width: 100%;
-  max-height: 570px;
+  max-height: 750px;
   overflow-y: auto;
   margin-top: 10px;
   border-top: 1px solid #ddd;
+  border-radius: 20px;
 }
 
 
@@ -130,7 +131,7 @@ th {
   top: 0;
   z-index: 1;
   text-align: center;
-
+  
   white-space: normal;
   overflow-wrap: break-word;
   word-break: normal;
@@ -459,4 +460,41 @@ option {
   display: flex;
   gap: 50px;
   margin-top: 20px;
+}
+
+#category{
+  width: 100px;
+  border: #0f172a 1px solid;
+  text-align: center;
+}
+
+.logout-btn {
+  display: flex;
+  align-items: center;
+  padding: 0%;
+  width: 150px;
+  margin: 0%;
+  border-radius: 10px;
+    color: #475569;
+
+  background-color: white;
+}
+
+.logout-btn:hover {
+  background-color:#d2d6da;
+    color: #0f172a;
+
+}
+
+.logout-btn div{
+ 
+  padding: 5px;
+}
+.user-logo{
+  background-color:#cbd5e1;
+  border-radius: 50%;
+}
+
+.logout-logo {
+  margin-left: 10px;
 }

@@ -6,6 +6,7 @@ export function UserProvider({ children }) {
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState("");
 
   async function login(form) {
 
@@ -25,6 +26,7 @@ export function UserProvider({ children }) {
       const data = await response.json();
 
       if (data.success) {
+        setUser(data.user?.username ?? "");
         setIsLoggedIn(true);
       } else {
         setIsLoggedIn(false);
@@ -44,6 +46,7 @@ export function UserProvider({ children }) {
       }
     );
 
+    setUser("");
     setIsLoggedIn(false);
   }
 
@@ -52,42 +55,43 @@ export function UserProvider({ children }) {
   }, []);
 
   async function checkSession() {
+  try {
+    const response = await fetch(
+      "http://localhost/inventory/server/checkSession.php",
+      {
+        credentials: "include",
+      }
+    );
 
-    try {
+    const data = await response.json();
 
-      const response = await fetch(
-        "http://localhost/inventory/server/checkSession.php",
-        {
-          credentials: "include"
-        }
-      );
+    console.log("Logged in:", data.loggedIn);
+console.log("Username from PHP:", data.user?.username);
 
-      const data = await response.json();
+setIsLoggedIn(data.loggedIn);
+setUser(data.loggedIn ? data.user?.username ?? "" : "");
 
-      setIsLoggedIn(data.loggedIn);
+    console.log("Session response:", data);
 
-    } catch (error) {
-
-      console.error("Session check failed:", error);
-      setIsLoggedIn(false);
-
-    } finally {
-
-      setLoading(false);
-
-    }
+    setIsLoggedIn(data.loggedIn);
+    setUser(data.loggedIn ? data.user?.username ?? "" : "");
+  } catch (error) {
+    console.error("Session check failed:", error);
+    setIsLoggedIn(false);
+    setUser("");
+  } finally {
+    setLoading(false);
   }
-
-  useEffect(() => {
-    checkSession();
-  }, []);
+}
+console.log("UserContext username:", user);
 
   return (
     <UserContext.Provider
       value={{
         isLoggedIn,
         login,logout,
-        loading
+        loading,
+        user
       }}
     >
       {children}

@@ -140,14 +140,14 @@ export function ProductProvider({ children }) {
 
   function getLowStock() {
     return productList.filter(
-      (product) => Number(product.stock) <= rop(product)
+      (product) => Number(product.stock) <= product.rop
     );
   }
 
 
   function getStatus(product) {
     const stock = Number(product.stock);
-    const reorderPoint = Number(rop(product));
+    const reorderPoint = Number(product.rop);
 
     if (stock <= 0) {
       return (
@@ -191,24 +191,18 @@ export function ProductProvider({ children }) {
     }
   }
 
+  function getStatusValue(product){
+    const stock = Number(product.stock);
+    const reorderPoint = Number(product.rop);
 
-  function eoq(product) {
-    return Math.round(Math.sqrt((2 * product.daily_demand * 365 * product.ordering_cost) / product.holding_cost));
+    if(stock===0){
+      return "outOfStock";
+    }else if (stock <= reorderPoint){
+      return "lowStock";
+    } else {
+      return "inStock";
+    }
   }
-
-  function eoi(product) {
-    return Math.round(eoq(product) / (product.daily_demand * 365) * 365);
-  }
-
-  function rop(product) {
-    return product.daily_demand * product.lead_time;
-  }
-
-  function transaction(){
-
-  }
-
-
 
 
 
@@ -218,9 +212,7 @@ export function ProductProvider({ children }) {
       deleteProduct,
       categories,
 
-      eoq, eoi, rop,
-
-      getLowStock, getStatus,
+      getLowStock, getStatus, getStatusValue,
 
       deleteModal, setDeleteModal,
       getTotalStocks

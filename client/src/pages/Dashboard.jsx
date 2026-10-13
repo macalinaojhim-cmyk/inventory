@@ -1,6 +1,6 @@
 import CategoryChart from "../components/CategoryChart";
 import { Link } from "react-router-dom";
-import { Box, Warehouse, TriangleAlert, MoveRight, ArrowRight, Clock, ChartPie } from "lucide-react";
+import { Box, Warehouse, TriangleAlert, MoveRight, ShoppingCart, ChartPie } from "lucide-react";
 import 'ldrs/react/Bouncy.css'
 
 import LowStockAlert from "../components/LowStockAlert.jsx"
@@ -8,11 +8,11 @@ import LowStockAlert from "../components/LowStockAlert.jsx"
 import { ProductContext } from "../context/ProductContext";
 import { useContext } from "react";
 import RecentTransaction from "../components/RecentTransaction.jsx";
+import { UserContext } from "../context/UserContext.jsx";
 
 export default function Dashbord() {
 
-    const { productList, getTotalStocks, getLowStock, getStatus, lowStocks,
-        eoq, eoi, rop } = useContext(ProductContext);
+    const { productList, getTotalStocks, getLowStock, getStatus, lowStocks } = useContext(ProductContext);
     return (
         <div>
             <h1 className="dashboard heading">Dashboard</h1>
@@ -62,7 +62,10 @@ export default function Dashbord() {
                         </div>
                     </div>
                     <div className="dash-products-table">
-                        <h2>Products</h2>
+                        <div className="dash-prod-table-header">
+                            <ShoppingCart size={30} />
+                            <h2>Products</h2>
+                        </div>
                         <table className='dash-table'>
                             <thead>
                                 <tr>
@@ -82,9 +85,9 @@ export default function Dashbord() {
                                             <td>{product.name}</td>
                                             <td>{product.category}</td>
                                             <td>{product.stock}</td>
-                                            <td>{eoq(product)}</td>
-                                            <td>{eoi(product)}-Days</td>
-                                            <td>{rop(product)}</td>
+                                            <td>{product.eoq}</td>
+                                            <td>{product.eoi}-Days</td>
+                                            <td>{product.rop}</td>
                                             <td>{getStatus(product)}</td>
                                         </tr>
                                     ))
