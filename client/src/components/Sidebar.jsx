@@ -24,7 +24,7 @@ export default function Sidebar() {
 
                 </div>
                 <div style={{textAlign: 'start'}}>
-                    <p>{user}</p>
+                    <p style={{padding: '0%'}}>{user}</p>
                     <p style={{fontSize:'10px'}}>Admin</p>
                 </div>
                 <div className="logout-logo">
