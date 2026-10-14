@@ -4,9 +4,9 @@ header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json");
 require("database.php");
 
-$username = "Jimboy";
-$email = "kiww@gmail.com";
-$password = "kiwwyum";
+$username = "Balmond";
+$email = "balmond@gmail.com";
+$password = "admin123";
 $password = password_hash($password, PASSWORD_DEFAULT);
 
 $sql = "INSERT INTO users (username, email, password)

@@ -32,7 +32,10 @@ if (mysqli_num_rows($result) === 0) {
 
 $user = mysqli_fetch_assoc($result);
 
+
 if (password_verify($password, $user["password"])) {
+
+    session_regenerate_id(true);
 
     $_SESSION["user_id"] = $user["id"];
     $_SESSION["username"] = $user["username"];
@@ -40,7 +43,12 @@ if (password_verify($password, $user["password"])) {
 
     echo json_encode([
         "success" => true,
-        "message" => "Login successful"
+        "message" => "Login successful",
+        "user" => [
+            "id" => $user["id"],
+            "username" => $user["username"],
+            "email" => $user["email"]
+        ]
     ]);
 
 } else {

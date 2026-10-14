@@ -1,3 +1,4 @@
+
 <?php
 
 session_start();
@@ -22,6 +23,8 @@ if (isset($_SESSION["user_id"])) {
 
     echo json_encode([
         "success" => false,
-        "loggedIn" => false
+        "loggedIn" => false,
+        "user" => null
     ]);
+
 }
