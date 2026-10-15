@@ -6,6 +6,7 @@ export function ProductProvider({ children }) {
   const [productList, setProductList] = useState([]);
   const [loading, setLoading] = useState(true);
   const [deleteModal, setDeleteModal] = useState(false);
+  const [transactions, setTransactions] = useState([]);
 
   const [categories, setCategories] = useState([]);
 
@@ -29,6 +30,7 @@ export function ProductProvider({ children }) {
   };
   useEffect(() => {
     getItems();
+    getTransactions();
   }, []);
 
   useEffect(() => {
@@ -204,13 +206,24 @@ export function ProductProvider({ children }) {
     }
   }
 
+  async function getTransactions(){
+    try{
+      const response = await fetch("http://localhost/inventory/server/transactions/getTransaction.php");
+      const data = await response.json();
 
+      setTransactions(data.transactions);
+    }catch(error){
+      console.error(error);
+    }
+  }
 
   return (
     <ProductContext.Provider value={{
       addProduct, editProduct, productList,
       deleteProduct,
       categories,
+
+      transactions,
 
       getLowStock, getStatus, getStatusValue,
 

@@ -222,6 +222,30 @@ p {
     border-radius: 15px;
 }
 
+.transactions-item{
+    display: flex;
+    justify-content: space-between;
+    margin-right: 20px;
+}
+
+.transaction-left {
+    display: flex;
+    gap: 20px;
+    margin: 20px;
+}
+
+.type-item-name {
+    display: flex;
+    flex-direction: column;
+}
+.date {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+
 .stocks-by-category {
     margin-top: 20px;
     box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.1);

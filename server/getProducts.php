@@ -17,6 +17,7 @@ while ($product = mysqli_fetch_assoc($result)) {
     $product["eoi"] = calculateEOI($product);
     $product["rop"] = calculateROP($product);
     $product["dsr"] = calculateDayOfStockRemaining($product);
+    $product["general"] = 
     $products[] = $product;
 }
 

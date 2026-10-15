@@ -64,7 +64,7 @@ export default function Dashbord() {
                     <div className="dash-products-table">
                         <div className="dash-prod-table-header">
                             <ShoppingCart size={30} />
-                            <h2>Products</h2>
+                            <h2>Recent Products</h2>
                         </div>
                         <table className='dash-table'>
                             <thead>

@@ -6,7 +6,7 @@ import ProductTable from "../components/ProductTable";
 
 function Products() {
   const [showModal, setShowModal] = useState(false);
-  const { productList, addProduct, loading, categories, availabilityStatus, setAvailabilityStatus } = useContext(ProductContext);
+  const { productList, addProduct, loading, categories, getStatus } = useContext(ProductContext);
 
   const [name, setName] = useState("");
   const [category, setCategory] = useState("Others");
@@ -56,7 +56,81 @@ function Products() {
         <button onClick={() => setShowModal(true)}>Add Product</button>
       </div>
 
-      <ProductTable className="product-table" />
+
+      <div className="products-table">
+        <div className="table-nav">
+          <input type="text" placeholder="Search Product" />
+
+          <div className="table-filter">
+            <select name="category-filter" id="category-filter">
+              <option value="">All Categories</option>
+              {categories.map((category) => (
+                <option key={category} value={category}>
+                  {category}
+                </option>
+              ))}
+            </select>
+
+            <select name="status-filter" id="status-filter">
+              <option value="">All Status</option>
+              <option value="In Stock">In Stock</option>
+              <option value="Low Stock">Low Stock</option>
+              <option value="Out of Stock">Out of Stock</option>
+            </select>
+          </div>
+        </div>
+
+        <div className="products-table-table">
+          <table>
+            <thead>
+              <tr>
+                <th>Product Name</th>
+                <th>Category</th>
+                <th>Stock</th>
+                <th>Daily Demand</th>
+                <th>Lead Time</th>
+                <th>Ordering Cost</th>
+                <th>Holding Cost</th>
+                <th>EOQ</th>
+                <th>EOI</th>
+                <th>ROP</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              {productList.slice(0, 10).map((product) => {
+                const status = getStatus(product);
+
+                return (
+                  <tr key={product.id}>
+                    <td className="product-name">{product.name}</td>
+                    <td>
+                      <span className="category-badge">{product.category}</span>
+                    </td>
+                    <td>{product.stock}</td>
+                    <td>{product.daily_demand}</td>
+                    <td>{product.lead_time} days</td>
+                    <td>₱{Number(product.ordering_cost).toLocaleString()}</td>
+                    <td>₱{Number(product.holding_cost).toLocaleString()}</td>
+                    <td>{product.eoq}</td>
+                    <td>{product.eoi}</td>
+                    <td>{product.rop}</td>
+                    <td>
+                      {getStatus(product)}
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+
+
+
+
 
       {showModal && (
         <div className="add-product-modal">
