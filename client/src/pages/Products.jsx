@@ -2,6 +2,9 @@ import { useContext, useState } from "react";
 import { ProductContext } from "../context/ProductContext";
 import { Bouncy } from 'ldrs/react'
 import 'ldrs/react/Bouncy.css'
+import { Pencil, Trash } from "lucide-react";
+import EditProductModal from "../components/EditProductModal";
+import Delete from "../components/Delete";
 
 const PRODUCTS_PER_PAGE = 10;
 
@@ -25,7 +28,7 @@ function getPageNumbers(current, total, span = 1) {
 
 function Products() {
   const [showModal, setShowModal] = useState(false);
-  const { productList, addProduct, loading, categories, getStatus, getStatusValue } = useContext(ProductContext);
+  const { productList, addProduct, loading, categories, getStatus, getStatusValue, deleteModal, setDeleteModal } = useContext(ProductContext);
 
   const [name, setName] = useState("");
   const [category, setCategory] = useState("Others");
@@ -39,6 +42,8 @@ function Products() {
   const [categoryFilter, setCategoryFilter] = useState("");
   const [statusFilter, setStatusFilter] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
+  const [editRow, setEditRow] = useState(null);
+  const [deleteId, setDeleteId] = useState(null);
 
   const categoryOptions = [...new Set(["Others", ...categories])];
 
@@ -171,13 +176,14 @@ function Products() {
                   <th>EOI</th>
                   <th>ROP</th>
                   <th>Status</th>
+                  <th>Action</th>
                 </tr>
               </thead>
 
               <tbody>
                 {paginatedProducts.length === 0 ? (
                   <tr>
-                    <td colSpan="11">No products found.</td>
+                    <td colSpan="12">No products found.</td>
                   </tr>
                 ) : (
                   paginatedProducts.map((product) => (
@@ -196,6 +202,27 @@ function Products() {
                       <td>{product.rop}</td>
                       <td>
                         {getStatus(product)}
+                      </td>
+                      <td>
+                        <button
+                          type="button"
+                          className="table-action-btn"
+                          aria-label={`Edit ${product.name}`}
+                          onClick={() => setEditRow(product)}
+                        >
+                          <Pencil size={15} />
+                        </button>
+                        <button
+                          type="button"
+                          className="table-action-btn"
+                          aria-label={`Delete ${product.name}`}
+                          onClick={() => {
+                            setDeleteId(product.id);
+                            setDeleteModal(true);
+                          }}
+                        >
+                          <Trash size={15} />
+                        </button>
                       </td>
                     </tr>
                   ))
@@ -250,6 +277,17 @@ function Products() {
 
 
 
+
+      {editRow && (
+        <EditProductModal
+          product={editRow}
+          onClose={() => setEditRow(null)}
+        />
+      )}
+
+      {deleteModal && (
+        <Delete id={deleteId} />
+      )}
 
       {showModal && (
         <div className="add-product-modal">
