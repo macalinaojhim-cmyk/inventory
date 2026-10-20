@@ -55,41 +55,41 @@ export function UserProvider({ children }) {
   }, []);
 
   async function checkSession() {
-  try {
-    const response = await fetch(
-      "http://localhost/inventory/server/checkSession.php",
-      {
-        credentials: "include",
-      }
-    );
+    try {
+      const response = await fetch(
+        "http://localhost/inventory/server/checkSession.php",
+        {
+          credentials: "include",
+        }
+      );
 
-    const data = await response.json();
+      const data = await response.json();
 
-    console.log("Logged in:", data.loggedIn);
-console.log("Username from PHP:", data.user?.username);
+      console.log("Logged in:", data.loggedIn);
+      console.log("Username from PHP:", data.user?.username);
 
-setIsLoggedIn(data.loggedIn);
-setUser(data.loggedIn ? data.user?.username ?? "" : "");
+      setIsLoggedIn(data.loggedIn);
+      setUser(data.loggedIn ? data.user?.username ?? "" : "");
 
-    console.log("Session response:", data);
+      console.log("Session response:", data);
 
-    setIsLoggedIn(data.loggedIn);
-    setUser(data.loggedIn ? data.user?.username ?? "" : "");
-  } catch (error) {
-    console.error("Session check failed:", error);
-    setIsLoggedIn(false);
-    setUser("");
-  } finally {
-    setLoading(false);
+      setIsLoggedIn(data.loggedIn);
+      setUser(data.loggedIn ? data.user?.username ?? "" : "");
+    } catch (error) {
+      console.error("Session check failed:", error);
+      setIsLoggedIn(false);
+      setUser("");
+    } finally {
+      setLoading(false);
+    }
   }
-}
-console.log("UserContext username:", user);
+  console.log("UserContext username:", user);
 
   return (
     <UserContext.Provider
       value={{
         isLoggedIn,
-        login,logout,
+        login, logout,
         loading,
         user
       }}
