@@ -202,12 +202,47 @@ export function ProductProvider({ children }) {
 
   async function getTransactions(){
     try{
-      const response = await fetch("http://localhost/inventory/server/transactions/getTransaction.php");
+      const response = await fetch("http://localhost/inventory/server/transactions/getTransaction.php", {
+        credentials: "include"
+      });
       const data = await response.json();
 
-      setTransactions(data.transactions);
+      setTransactions(Array.isArray(data.transactions) ? data.transactions : []);
     }catch(error){
       console.error(error);
+      setTransactions([]);
+    }
+  }
+
+  async function addTransaction(productId, transactionType, quantity) {
+    const formData = new FormData();
+
+    formData.append("product_id", productId);
+    formData.append("transaction_type", transactionType);
+    formData.append("quantity", quantity);
+
+    try {
+      const response = await fetch(
+        "http://localhost/inventory/server/transactions/addTransaction.php",
+        {
+          method: "POST",
+          body: formData,
+          credentials: "include"
+        }
+      );
+
+      const data = await response.json();
+
+      if (data.success) {
+        await Promise.all([getTransactions(), getItems()]);
+      }
+
+      return data;
+
+    } catch (error) {
+      console.error("Error adding transaction:", error);
+
+      return { success: false, message: "Could not reach the server" };
     }
   }
 
@@ -218,6 +253,7 @@ export function ProductProvider({ children }) {
       categories,
 
       transactions,
+      getTransactions, addTransaction,
 
       getLowStock, getStatus, getStatusValue,
 

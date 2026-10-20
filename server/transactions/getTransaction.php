@@ -1,12 +1,16 @@
-
 <?php
 
-header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Origin: http://localhost:5173");
+header("Access-Control-Allow-Credentials: true");
 header("Content-Type: application/json");
 
 require __DIR__ . "/../database.php";
 
-$sql = "SELECT * FROM inventory_transactions ORDER BY time DESC";
+$sql = "SELECT t.*, u.username AS username
+        FROM inventory_transactions t
+        LEFT JOIN users u ON u.id = t.user_id
+        ORDER BY t.time DESC, t.id DESC
+        LIMIT 20";
 
 $result = mysqli_query($conn, $sql);
 

@@ -356,6 +356,18 @@
   margin: 0;
 }
 
+.edit-modal-overlay .movement-current-stock {
+  margin: 16px 0 0;
+  color: #64748b;
+  font-size: 13px;
+}
+
+.edit-modal-overlay .movement-error {
+  margin: 12px 0 0;
+  color: #dc2626;
+  font-size: 13px;
+}
+
 /* Pagination */
 .table-pagination {
   display: flex;

@@ -2,9 +2,10 @@ import { useContext, useState } from "react";
 import { ProductContext } from "../context/ProductContext";
 import { Bouncy } from 'ldrs/react'
 import 'ldrs/react/Bouncy.css'
-import { Pencil, Trash } from "lucide-react";
+import { Pencil, Trash, ArrowRightLeft } from "lucide-react";
 import EditProductModal from "../components/EditProductModal";
 import Delete from "../components/Delete";
+import StockMovementModal from "../components/StockMovementModal";
 
 const PRODUCTS_PER_PAGE = 10;
 
@@ -44,6 +45,7 @@ function Products() {
   const [currentPage, setCurrentPage] = useState(1);
   const [editRow, setEditRow] = useState(null);
   const [deleteId, setDeleteId] = useState(null);
+  const [movementRow, setMovementRow] = useState(null);
 
   const categoryOptions = [...new Set(["Others", ...categories])];
 
@@ -207,6 +209,14 @@ function Products() {
                         <button
                           type="button"
                           className="table-action-btn"
+                          aria-label={`Record stock movement for ${product.name}`}
+                          onClick={() => setMovementRow(product)}
+                        >
+                          <ArrowRightLeft size={15} />
+                        </button>
+                        <button
+                          type="button"
+                          className="table-action-btn"
                           aria-label={`Edit ${product.name}`}
                           onClick={() => setEditRow(product)}
                         >
@@ -277,6 +287,13 @@ function Products() {
 
 
 
+
+      {movementRow && (
+        <StockMovementModal
+          product={movementRow}
+          onClose={() => setMovementRow(null)}
+        />
+      )}
 
       {editRow && (
         <EditProductModal
