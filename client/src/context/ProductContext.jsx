@@ -67,13 +67,7 @@ export function ProductProvider({ children }) {
       console.log(data);
 
       if (data.success) {
-        setProductList((prevProducts) =>
-          prevProducts.map((product) =>
-            product.id === id
-              ? { ...product, ...updatedProduct }
-              : product
-          )
-        );
+        await getItems();
       }
 
       return data;
@@ -228,7 +222,8 @@ export function ProductProvider({ children }) {
       getLowStock, getStatus, getStatusValue,
 
       deleteModal, setDeleteModal,
-      getTotalStocks
+      getTotalStocks,
+      loading
     }}>
       {children}
     </ProductContext.Provider>
